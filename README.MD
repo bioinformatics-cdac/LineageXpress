@@ -15,25 +15,6 @@ Sequential version (sequential_version_lineage_predictor.py)
 
 Parallel version (lineage_predictor_multiprocessing_pool_parallel.py)
 
-LineageXpress/
-├── README.MD
-├── data
-│   ├── h37rv.dict
-│   ├── h37rv.fa
-│   ├── h37rv.fa.*
-│   ├── lineage_snp_updated_au13.tsv
-│   └── targeted_modified_regions_au13.bed
-├── environment_parallel.yml
-├── environment_serial.yml
-├── results/
-├── sample_data
-│   ├── SRR650226_1.fastq.gz
-│   └── SRR650226_2.fastq.gz
-├── sample_list.txt
-└── scripts
-    ├── parallel_version_lineageXpress.py
-    └── sequential_version_lineageXpress.py
-
 Create Conda Environments
 
 # For serial version
@@ -93,4 +74,5 @@ conda activate lineagexpress_serial
 
 python sequential_version_lineage_predictor.py 
   --fastq sample_list.txt \
+
   --output_dir results \
