@@ -1,0 +1,12 @@
+name: lineagexpress_serial
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - bwa
+  - samtools
+  - gatk4
+
+
