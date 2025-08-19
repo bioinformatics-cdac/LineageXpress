@@ -4,6 +4,7 @@ import argparse
 import logging
 from collections import defaultdict
 import time
+import re
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s', level=logging.INFO)
 
@@ -43,59 +44,74 @@ def load_lineage_snp_file(snp_file):
     return lineage_snps
 def detect_sample_type(sample_entry):
     """
-    Accepts:
-      - file path (fastq/bam/vcf)
-      - directory path (e.g., sample_data/SRR650226/)
-      - bare ID (e.g., SRR650226) -> search under sample_data/<ID>/
+    Accepts one line from sample_list.txt that can be:
+      - bare ID                    -> search sample_data/<ID>/ then sample_data/
+      - directory path             -> search inside that directory
+      - paired FASTQs as 'R1,R2'   -> use those two files directly
+      - single file path           -> classify by extension (fastq/bam/vcf)
     Returns: (kind, [paths]) where kind in {"paired","single","bam","vcf","unknown"}
     """
-    # File given directly
-    if os.path.isfile(sample_entry):
-        name = sample_entry.lower()
-        if name.endswith((".vcf", ".vcf.gz")):
-            return "vcf", [sample_entry]
-        if name.endswith(".bam"):
-            return "bam", [sample_entry]
-        if name.endswith((".fastq", ".fastq.gz", ".fq", ".fq.gz")):
-            return "single", [sample_entry]
+    entry = sample_entry.strip()
 
-    # Directory or ID
-    if os.path.isdir(sample_entry):
-        base_dir = sample_entry
-        sample_id = os.path.basename(os.path.normpath(sample_entry))
-    else:
-        base_dir = os.path.join("sample_data", sample_entry)
-        sample_id = sample_entry
+    # 1) Explicit paired FASTQs in one line: R1,R2
+    if ',' in entry:
+        parts = [p.strip() for p in entry.split(',') if p.strip()]
+        if len(parts) == 2 and all(os.path.isfile(p) for p in parts):
+            # ensure they look like FASTQs
+            if all(p.lower().endswith((".fastq", ".fastq.gz", ".fq", ".fq.gz")) for p in parts):
+                return "paired", parts
 
-    # paired patterns
-    patterns = [
-        (f"{sample_id}_1.fastq",     f"{sample_id}_2.fastq"),
-        (f"{sample_id}_1.fastq.gz",  f"{sample_id}_2.fastq.gz"),
-        (f"{sample_id}_R1.fastq",    f"{sample_id}_R2.fastq"),
-        (f"{sample_id}_R1.fastq.gz", f"{sample_id}_R2.fastq.gz"),
-        (f"{sample_id}.1.fastq",     f"{sample_id}.2.fastq"),
-        (f"{sample_id}.1.fastq.gz",  f"{sample_id}.2.fastq.gz"),
-    ]
-    for r1, r2 in patterns:
-        r1_path = os.path.join(base_dir, r1)
-        r2_path = os.path.join(base_dir, r2)
-        if os.path.exists(r1_path) and os.path.exists(r2_path):
-            return "paired", [r1_path, r2_path]
+    # 2) Single concrete file path
+    if os.path.isfile(entry):
+        low = entry.lower()
+        if low.endswith((".vcf", ".vcf.gz")):
+            return "vcf", [entry]
+        if low.endswith(".bam"):
+            return "bam", [entry]
+        if low.endswith((".fastq", ".fastq.gz", ".fq", ".fq.gz")):
+            return "single", [entry]
 
-    # single-end
-    for ext in (".fastq", ".fastq.gz", ".fq", ".fq.gz"):
-        se = os.path.join(base_dir, sample_id + ext)
-        if os.path.exists(se):
-            return "single", [se]
+    # Helper: search for files named after sample_id within a directory
+    def _check_dir(base_dir, sample_id):
+        patterns = [
+            (f"{sample_id}_1.fastq",     f"{sample_id}_2.fastq"),
+            (f"{sample_id}_1.fastq.gz",  f"{sample_id}_2.fastq.gz"),
+            (f"{sample_id}_R1.fastq",    f"{sample_id}_R2.fastq"),
+            (f"{sample_id}_R1.fastq.gz", f"{sample_id}_R2.fastq.gz"),
+            (f"{sample_id}.1.fastq",     f"{sample_id}.2.fastq"),
+            (f"{sample_id}.1.fastq.gz",  f"{sample_id}.2.fastq.gz"),
+        ]
+        for r1, r2 in patterns:
+            r1_path = os.path.join(base_dir, r1)
+            r2_path = os.path.join(base_dir, r2)
+            if os.path.exists(r1_path) and os.path.exists(r2_path):
+                return "paired", [r1_path, r2_path]
+        for ext in (".fastq", ".fastq.gz", ".fq", ".fq.gz"):
+            se = os.path.join(base_dir, sample_id + ext)
+            if os.path.exists(se):
+                return "single", [se]
+        bam = os.path.join(base_dir, f"{sample_id}.bam")
+        if os.path.exists(bam):
+            return "bam", [bam]
+        for vext in (".vcf", ".vcf.gz"):
+            v = os.path.join(base_dir, f"{sample_id}{vext}")
+            if os.path.exists(v):
+                return "vcf", [v]
+        return "unknown", []
 
-    # BAM / VCF with sample_id basename
-    bam = os.path.join(base_dir, f"{sample_id}.bam")
-    if os.path.exists(bam):
-        return "bam", [bam]
-    for vext in (".vcf", ".vcf.gz"):
-        v = os.path.join(base_dir, f"{sample_id}{vext}")
-        if os.path.exists(v):
-            return "vcf", [v]
+    # 3) If it's an explicit directory, try it first
+    if os.path.isdir(entry):
+        sample_id = os.path.basename(os.path.normpath(entry))
+        kind, files = _check_dir(entry, sample_id)
+        if kind != "unknown":
+            return kind, files
+
+    # 4) Treat as bare ID; search standard places
+    sample_id = os.path.basename(os.path.normpath(entry))
+    for base_dir in (os.path.join("sample_data", sample_id), "sample_data"):
+        kind, files = _check_dir(base_dir, sample_id)
+        if kind != "unknown":
+            return kind, files
 
     return "unknown", []
 def process_sample(sample_path, ref_genome, output_dir, lineage_references,
@@ -252,6 +268,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
 
