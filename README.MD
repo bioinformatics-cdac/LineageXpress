@@ -17,14 +17,14 @@ Parallel version (lineage_predictor_multiprocessing_pool_parallel.py)
 
 Create Conda Environments
 
-# For serial version
+## For serial version
 conda env create -f environment/environment_serial.yml
 
 # For parallel version
 conda env create -f environment/environment_parallel.yml
 
-Activate Environment
-# Serial version
+#Activate Environment
+## Serial version
 conda activate lineagexpress_serial
 
 # Parallel version
@@ -76,3 +76,4 @@ python sequential_version_lineage_predictor.py
   --fastq sample_list.txt \
 
   --output_dir results \
+
