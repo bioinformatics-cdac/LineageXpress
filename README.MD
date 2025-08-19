@@ -26,11 +26,11 @@ git clone https://github.com/yourusername/lineagexpress.git
 cd lineagexpress
 
 # Serial (sequential) environment
-conda env create -f environment/environment_serial.yml
+conda env create -f environment_serial.yml
 conda activate lineagexpress_serial
 
 # Parallel (multiprocessing) environment
-conda env create -f environment/environment_parallel.yml
+conda env create -f environment_parallel.yml
 conda activate lineagexpress_parallel
 --- 
 ## How to run this tool
@@ -59,6 +59,7 @@ conda activate lineagexpress_serial
 python sequential_version_lineage_predictor.py \
   --fastq sample_list.txt \
   --output_dir results
+
 
 
 
