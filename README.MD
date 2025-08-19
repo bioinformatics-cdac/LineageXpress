@@ -21,6 +21,10 @@ It supports both **sequential** and **parallel (multiprocessing)** execution for
 ## ⚙️ Installation (Conda)
 
 ```bash
+
+git clone https://github.com/yourusername/lineagexpress.git
+cd lineagexpress
+
 # Serial (sequential) environment
 conda env create -f environment/environment_serial.yml
 conda activate lineagexpress_serial
@@ -55,6 +59,7 @@ conda activate lineagexpress_serial
 python sequential_version_lineage_predictor.py \
   --fastq sample_list.txt \
   --output_dir results
+
 
 
 
