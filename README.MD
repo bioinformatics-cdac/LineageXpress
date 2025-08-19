@@ -56,9 +56,10 @@ replace --fastq with --bam or --vcf to generate results from the bam or vcf file
 
 conda activate lineagexpress_serial
 
-python sequential_version_lineage_predictor.py \
+python scripts/sequential_version_lineageXpress.py \
   --fastq sample_list.txt \
   --output_dir results
+
 
 
 
