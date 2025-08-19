@@ -2,9 +2,7 @@
   <img src="assets/lineageXpress.png" alt="LineageXpress Logo" width="200"/>
 </p>
 
-# LineageXpress
 
-LineageXpress
 
 LineageXpress is a probabilistic tool for predicting Mycobacterium tuberculosis complex (MTBC) lineages based on lineage-specific SNP markers.
 It supports both sequential and parallel (multiprocessing) execution for efficient variant calling and lineage prediction on different setups, including HPC clusters.
@@ -89,6 +87,7 @@ python sequential_version_lineage_predictor.py
   --fastq sample_list.txt \
 
   --output_dir results \
+
 
 
 
