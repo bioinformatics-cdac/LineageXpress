@@ -13,7 +13,7 @@ It supports both **sequential** and **parallel (multiprocessing)** execution for
 - SNP-based lineage classification using an interpretable probabilistic score
 - Supports **single-end FASTQ**, **paired-end FASTQ**, **BAM**, or **VCF**
 - Two execution modes:
-  - **Sequential:** `sequential_version_lineage_predictor.py`
+  - **Sequential:** `sequential_version_lineageXpress.py`
   - **Parallel:** `parallel_version_lineageXpress.py`
 
 ---
@@ -39,7 +39,7 @@ make a list with sample SRA accession file(s)
 
 Sequential 
 
-python sequential_version_lineage_predictor.py \
+python scripts/sequential_version_lineageXpress.py \
   --fastq sample_list.txt \
   --output_dir results
 
@@ -59,6 +59,7 @@ conda activate lineagexpress_serial
 python sequential_version_lineage_predictor.py \
   --fastq sample_list.txt \
   --output_dir results
+
 
 
 
