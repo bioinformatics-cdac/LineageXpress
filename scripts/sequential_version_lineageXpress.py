@@ -162,23 +162,28 @@ def process_sample(sample_path, ref_genome, output_dir, lineage_references, bed_
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("sample_file")
-    parser.add_argument("--ref_genome", required=True)
-    parser.add_argument("--output_dir", required=True)
-    parser.add_argument("--snp_file", required=True)
-    parser.add_argument("--bed_file", required=True)
+    parser.add_argument("--fastq", required=True, help="Path to sample list file (one sample per line)")
+    parser.add_argument("--ref_genome", default="data/h37rv.fa", help="Reference genome FASTA (default: data/h37rv.fa)")
+    parser.add_argument("--output_dir", default="results", help="Output directory (default: results)")
+    parser.add_argument("--snp_file", default="data/lineage_snps.txt", help="Lineage SNP reference file (default: data/lineage_snps.txt)")
+    parser.add_argument("--bed_file", default="data/targets.bed", help="Target regions BED file (default: data/targets.bed)")
     parser.add_argument("--bam_file", default=None)
     parser.add_argument("--vcf_file", default=None)
+    parser.add_argument("--threads", type=int, default=1, help="Threads for BWA (default: 1)")
     args = parser.parse_args()
 
+    for path, label in [(args.ref_genome, "ref_genome"), (args.snp_file, "snp_file"), (args.bed_file, "bed_file")]:
+        if not os.path.exists(path):
+            raise FileNotFoundError(f"{label} not found at {path}. Place it in data/ or override the path.")
     lineage_references = load_lineage_snp_file(args.snp_file)
     with open(args.sample_file) as f:
         samples = [line.strip() for line in f if line.strip()]
-
-    for sample_path in samples:
+        
+   for sample_path in samples:
         process_sample(sample_path, args.ref_genome, args.output_dir,
                        lineage_references, args.bed_file,
-                       bam_override=args.bam_file, vcf_override=args.vcf_file)
+                       bam_override=args.bam_file, vcf_override=args.vcf_file,threads=args.threads)
 
 if __name__ == "__main__":
     main()
+
