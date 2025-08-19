@@ -184,12 +184,12 @@ def main():
     parser.add_argument(
         "--snp_file",
         default="data/lineage_snps.txt",
-        help="Lineage SNP reference file (default: data/lineage_snps.txt)"
+        help="Lineage SNP reference file (default: data/lineage_snp_updated_au13.tsv)"
     )
     parser.add_argument(
         "--bed_file",
         default="data/targets.bed",
-        help="Target regions BED file (default: data/targets.bed)"
+        help="Target regions BED file (default: data/targeted_modified_regions_au13.bed)"
     )
     parser.add_argument("--bam_file", default=None, help="Override: use this BAM for all samples")
     parser.add_argument("--vcf_file", default=None, help="Override: use this VCF for all samples")
@@ -239,5 +239,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
