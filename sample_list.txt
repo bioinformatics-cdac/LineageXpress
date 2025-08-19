@@ -1,1 +1,1 @@
-/mnt/c/Users/DELL/Documents/animal_mtbc/LineageXpress/sample_data/SRR650226
+sample_data/SRR650226
