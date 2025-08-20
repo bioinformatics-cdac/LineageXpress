@@ -56,7 +56,7 @@ conda activate lineagexpress_parallel
 
 ---
 
- [!TIP] Quickstart (with sample data)
+ 🚀 Quickstart (with sample data)
 
  ```bash
  conda activate lineagexpress_serial
@@ -64,6 +64,7 @@ conda activate lineagexpress_parallel
    --fastq sample_list.txt \
    --output_dir results
  ```
+
 
 
 
