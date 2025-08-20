@@ -1,6 +1,6 @@
-<p align="center">
-  <img src="assets/lineageXpress.png" alt="LineageXpress Logo" width="200"/>
-</p>
+<p align="center"
+  <img src="assets/lineageXpress.png" alt="LineageXpress Logo" width="200"/
+</p
 
 # LineageXpress
 
@@ -33,36 +33,45 @@ conda activate lineagexpress_serial
 conda env create -f environment_parallel.yml
 conda activate lineagexpress_parallel
 --- 
-## How to run this tool
+ [!IMPORTANT] How to run this tool
 
-make a list with sample SRA accession file(s) 
+ **Sequential**
+ ```bash
+ python scripts/sequential_version_lineageXpress.py \
+   --fastq sample_list.txt \
+   --output_dir results
+ ```
 
-Sequential 
+ **Parallel**
+ ```bash
+ python scripts/parallel_version_lineageXpress.py \
+   --fastq sample_list.txt \
+   --output_dir results \
+   --n_jobs 2 \
+   --threads_per_tool 1
+ ```
+ Replace `--fastq` with `--bam` or `--vcf` to accept BAM/VCF inputs.
 
-python scripts/sequential_version_lineageXpress.py \
-  --fastq sample_list.txt \
-  --output_dir results
---- 
---- 
-Parallel
+---
 
-python scripts/parallel_version_lineageXpress.py \
-  --fastq sample_list.txt \
-  --output_dir results \
-  --n_jobs 2 \
-  --threads_per_tool 1
-replace --fastq with --bam or --vcf to generate results from the bam or vcf file(s) as input
---- 
---- 
-🚀 Quickstart (with sample data)
+ [!TIP] Quickstart (with sample data)
 
-conda activate lineagexpress_serial
+ ```bash
+ conda activate lineagexpress_serial
+ python scripts/sequential_version_lineageXpress.py \
+   --fastq sample_list.txt \
+   --output_dir results
+ ```
 
-python scripts/sequential_version_lineageXpress.py \
-  --fastq sample_list.txt \
-  --output_dir results
 
---- 
+
+
+
+
+
+
+
+
 
 
 
