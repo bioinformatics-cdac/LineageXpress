@@ -35,7 +35,7 @@ conda activate lineagexpress_parallel
 
 ```
 
-[!IMPORTANT] How to run this tool
+## [!IMPORTANT] How to run this tool
 
  **Sequential**
  ```bash
@@ -64,6 +64,7 @@ conda activate lineagexpress_parallel
    --fastq sample_list.txt \
    --output_dir results
  ```
+
 
 
 
