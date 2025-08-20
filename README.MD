@@ -32,8 +32,10 @@ conda activate lineagexpress_serial
 # Parallel (multiprocessing) environment
 conda env create -f environment_parallel.yml
 conda activate lineagexpress_parallel
---- 
- [!IMPORTANT] How to run this tool
+
+```
+
+[!IMPORTANT] How to run this tool
 
  **Sequential**
  ```bash
@@ -62,6 +64,7 @@ conda activate lineagexpress_parallel
    --fastq sample_list.txt \
    --output_dir results
  ```
+
 
 
 
