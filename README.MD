@@ -1,6 +1,7 @@
-<p align="center"
-  <img src="assets/lineageXpress.png" alt="LineageXpress Logo" width="200"/
-</p
+<p align="center">
+  <img src="https://raw.githubusercontent.com/bioinformatics-cdac/LineageXpress/master/assets/lineageXpress.png" 
+       alt="LineageXpress Logo" width="200"/>
+</p>
 
 # LineageXpress
 
@@ -64,6 +65,7 @@ conda activate lineagexpress_parallel
    --fastq sample_list.txt \
    --output_dir results
  ```
+
 
 
 
