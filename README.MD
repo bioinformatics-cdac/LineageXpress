@@ -22,8 +22,8 @@ It supports both **sequential** and **parallel (multiprocessing)** execution for
 
 ```bash
 
-git clone https://github.com/bioinformatics-cdac/lineageXpress.git
-cd lineagexpress
+git clone https://github.com/bioinformatics-cdac/LineageXpress.git
+cd LineageXpress
 
 # Serial (sequential) environment
 conda env create -f environment_serial.yml
@@ -59,6 +59,7 @@ conda activate lineagexpress_serial
 python scripts/sequential_version_lineageXpress.py \
   --fastq sample_list.txt \
   --output_dir results
+
 
 
 
