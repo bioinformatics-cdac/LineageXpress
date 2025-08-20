@@ -40,18 +40,12 @@ conda activate lineagexpress_parallel
 
  **Sequential**
  ```bash
- python scripts/sequential_version_lineageXpress.py \
-   --fastq sample_list.txt \
-   --output_dir results
+ python scripts/sequential_version_lineageXpress.py --fastq sample_list.txt --output_dir results
  ```
 
  **Parallel**
  ```bash
- python scripts/parallel_version_lineageXpress.py \
-   --fastq sample_list.txt \
-   --output_dir results \
-   --n_jobs 2 \
-   --threads_per_tool 1
+ python scripts/parallel_version_lineageXpress.py --fastq sample_list.txt --output_dir results  --n_jobs 2 --threads_per_tool 1
  ```
  Replace `--fastq` with `--bam` or `--vcf` to accept BAM/VCF inputs.
 
@@ -65,6 +59,7 @@ conda activate lineagexpress_parallel
    --fastq sample_list.txt \
    --output_dir results
  ```
+
 
 
 
