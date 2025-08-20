@@ -42,7 +42,8 @@ Sequential
 python scripts/sequential_version_lineageXpress.py \
   --fastq sample_list.txt \
   --output_dir results
-
+--- 
+--- 
 Parallel
 
 python scripts/parallel_version_lineageXpress.py \
@@ -51,7 +52,8 @@ python scripts/parallel_version_lineageXpress.py \
   --n_jobs 2 \
   --threads_per_tool 1
 replace --fastq with --bam or --vcf to generate results from the bam or vcf file(s) as input
-
+--- 
+--- 
 🚀 Quickstart (with sample data)
 
 conda activate lineagexpress_serial
@@ -60,6 +62,7 @@ python scripts/sequential_version_lineageXpress.py \
   --fastq sample_list.txt \
   --output_dir results
 
+--- 
 
 
 
