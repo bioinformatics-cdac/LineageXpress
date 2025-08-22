@@ -114,11 +114,7 @@ docker rm -f lxp-v1
 ```bash
 docker run -d --name lxp-v1   --restart unless-stopped   -p 7861:7860   -v $HOME/lx_results:/app/results   bioinformaticscdac/lineagexpress:v1.0.0
 ```
-
-
 ```
-
----
 
 📦 Outputs & File Layout
 
@@ -133,9 +129,6 @@ SAMPLE_ID_1_val_1.fq.gz, SAMPLE_ID_2_val_2.fq.gz – trimmed reads
 
 SAMPLE_ID_1_fastq.gz_trimming_report.txt, SAMPLE_ID_2_fastq.gz_trimming_report.txt – trimming summaries
 
-(optional) SAMPLE_ID_1_fastqc.zip/html, SAMPLE_ID_2_fastqc.zip/html – FastQC reports
-
-If you run the pipeline without trimming, these files won’t be produced.
 
 2) Mapping to Reference (BWA + samtools)
 
@@ -161,38 +154,14 @@ SAMPLE_ID.vcf – raw variants
 
 SAMPLE_ID.vcf.idx – VCF index
 
-(optional) SAMPLE_ID.filtered.vcf – variants after VariantFiltration (if enabled)
 
 4) Lineage Prediction (SNP matching)
 
-Files:
-
-SAMPLE_ID_lineage_prediction_result.txt
-(older builds: SAMPLE_ID_lineage_result.txt)
-
-This text file includes:
-
-Predicted lineage(s) and confidence
-
-Mixed-lineage flag (if multiple high-confidence matches)
-
-Per-lineage “matched/total SNPs” and probability
-
-Total runtime
-
-5) Per-sample ZIP (ready to share)
-
-SAMPLE_ID_lineages_results.zip
-Contains the key deliverables:
-
-SAMPLE_ID_sorted.bam, SAMPLE_ID_sorted.bam.bai
-
-SAMPLE_ID.vcf (and SAMPLE_ID.filtered.vcf if present)
-
 SAMPLE_ID_lineage_prediction_result.txt
 
-Intermediates like .sam, raw .bam, trimmed FASTQs, and FastQC zips can be deleted to save space after you’ve reviewed them.
 
+
+```
 ## ✅ Troubleshooting
 
 - **Browser doesn’t load:** confirm the port mapping shows in `docker ps` like `0.0.0.0:7861->7860/tcp`. Change host port if busy: `-p 9000:7860` → visit `http://localhost:9000`.
@@ -200,6 +169,7 @@ Intermediates like .sam, raw .bam, trimmed FASTQs, and FastQC zips can be delete
 - **Slow performance:** increase the **Threads** slider if you have more CPU cores; using BAM/VCF input skips alignment.
 
 ---
+
 
 
 
