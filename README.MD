@@ -115,10 +115,10 @@ docker rm -f lxp-v1
 docker run -d --name lxp-v1   --restart unless-stopped   -p 7861:7860   -v $HOME/lx_results:/app/results   bioinformaticscdac/lineagexpress:v1.0.0
 ```
 
-```bash
+
 
 ###📦 Outputs & File Layout###
-
+```bash
 LineageXpress writes per-sample results to your chosen results/ directory (Docker: the host folder you mounted to /app/results).
 Let SAMPLE_ID be the basename of your input (e.g., SRR650226).
 
@@ -160,8 +160,6 @@ SAMPLE_ID.vcf.idx – VCF index
 
 SAMPLE_ID_lineage_prediction_result.txt
 
-
-
 ```
 ## ✅ Troubleshooting
 
@@ -170,6 +168,7 @@ SAMPLE_ID_lineage_prediction_result.txt
 - **Slow performance:** increase the **Threads** slider if you have more CPU cores; using BAM/VCF input skips alignment.
 
 ---
+
 
 
 
