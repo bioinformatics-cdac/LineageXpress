@@ -116,7 +116,7 @@ docker run -d --name lxp-v1   --restart unless-stopped   -p 7861:7860   -v $HOME
 ```
 ```
 
-📦 Outputs & File Layout
+###📦 Outputs & File Layout###
 
 LineageXpress writes per-sample results to your chosen results/ directory (Docker: the host folder you mounted to /app/results).
 Let SAMPLE_ID be the basename of your input (e.g., SRR650226).
@@ -169,6 +169,7 @@ SAMPLE_ID_lineage_prediction_result.txt
 - **Slow performance:** increase the **Threads** slider if you have more CPU cores; using BAM/VCF input skips alignment.
 
 ---
+
 
 
 
