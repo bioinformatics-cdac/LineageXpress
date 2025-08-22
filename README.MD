@@ -114,7 +114,8 @@ docker rm -f lxp-v1
 ```bash
 docker run -d --name lxp-v1   --restart unless-stopped   -p 7861:7860   -v $HOME/lx_results:/app/results   bioinformaticscdac/lineagexpress:v1.0.0
 ```
-```
+
+```bash
 
 ###📦 Outputs & File Layout###
 
@@ -169,6 +170,7 @@ SAMPLE_ID_lineage_prediction_result.txt
 - **Slow performance:** increase the **Threads** slider if you have more CPU cores; using BAM/VCF input skips alignment.
 
 ---
+
 
 
 
