@@ -6,23 +6,23 @@
 # LineageXpress
 
 **LineageXpress** is a probabilistic tool for predicting *Mycobacterium tuberculosis complex* (MTBC) lineages using lineage-specific SNP markers.  
-It supports both **sequential** and **parallel (multiprocessing)** execution for efficient variant calling and lineage prediction on workstations and HPC clusters.
+It supports both **sequential** and **parallel (multiprocessing)** execution for efficient variant calling and lineage prediction on workstations and HPC clusters. A simple **web GUI (Docker)** is also available.
 
 ---
 
 ## ✨ Features
-- SNP-based lineage classification using an interpretable probabilistic score
-- Supports **single-end FASTQ**, **paired-end FASTQ**, **BAM**, or **VCF**
-- Two execution modes:
+- SNP-based lineage classification with an interpretable probability score
+- Input types: **single-end FASTQ**, **paired-end FASTQ**, **BAM**, or **VCF**
+- Execution modes:
   - **Sequential:** `sequential_version_lineageXpress.py`
   - **Parallel:** `parallel_version_lineageXpress.py`
+- Optional **browser GUI** (Docker) with per-sample ZIP outputs
 
 ---
 
-## ⚙️ Installation (Conda)
+## ⚙️ Installation (Conda / CLI)
 
 ```bash
-
 git clone https://github.com/bioinformatics-cdac/LineageXpress.git
 cd LineageXpress
 
@@ -33,56 +33,102 @@ conda activate lineagexpress_serial
 # Parallel (multiprocessing) environment
 conda env create -f environment_parallel.yml
 conda activate lineagexpress_parallel
-
 ```
 
-## [!IMPORTANT] How to run this tool
+### Run (CLI)
 
- **Sequential**
- ```bash
- python scripts/sequential_version_lineageXpress.py --fastq sample_list.txt --output_dir results
- ```
+**Sequential**
+```bash
+python scripts/sequential_version_lineageXpress.py --fastq sample_list.txt --output_dir results
+```
 
- **Parallel**
- ```bash
- python scripts/parallel_version_lineageXpress.py --fastq sample_list.txt --output_dir results  --n_jobs 2 --threads_per_tool 1
- ```
- Replace `--fastq` with `--bam` or `--vcf` to accept BAM/VCF inputs.
+**Parallel**
+```bash
+python scripts/parallel_version_lineageXpress.py   --fastq sample_list.txt   --output_dir results   --n_jobs 2   --threads_per_tool 1
+```
+
+> Replace `--fastq` with `--bam` or `--vcf` to accept BAM/VCF inputs.
 
 ---
 
-## 🚀 Quickstart (with sample data)
+## 🚀 Quickstart (CLI, with sample data)
 
- ```bash
- conda activate lineagexpress_serial
- python scripts/sequential_version_lineageXpress.py \
-   --fastq sample_list.txt \
-   --output_dir results
- ```
+```bash
+conda activate lineagexpress_serial
+python scripts/sequential_version_lineageXpress.py   --fastq sample_list.txt   --output_dir results
+```
+
+---
+
+## 🐳 Docker + Browser (GUI) — Beginner Friendly
+
+The Docker image bundles the app and reference files. Just install Docker and follow these steps.
+
+### 1) Pull the image (one-time)
+```bash
+docker pull bioinformaticscdac/lineagexpress:v1.0.0
+```
+
+### 2) Create a clean results folder on your machine
+**Linux / WSL**
+```bash
+mkdir -p ~/lx_results
+```
+**Windows (PowerShell)**
+```powershell
+mkdir C:\lx_results
+```
+
+### 3) Start the web app
+**Linux / WSL**
+```bash
+docker run --rm -it --name lxp-v1   -p 7861:7860   -v $HOME/lx_results:/app/results   bioinformaticscdac/lineagexpress:v1.0.0
+```
+
+**Windows (PowerShell with Docker Desktop)**
+```powershell
+docker run --rm -it --name lxp-v1 `
+  -p 7861:7860 `
+  -v C:\lx_results:/app/results `
+  bioinformaticscdac/lineagexpress:v1.0.0
+```
+
+Open your browser at **http://localhost:7861**.
+
+### 4) Use the GUI
+1. Upload **one** of the following:
+   - Paired FASTQ: select both **R1** and **R2**
+   - **BAM** file
+   - **VCF** file
+2. Choose **Threads** (defaults are fine).
+3. Click **Run Pipeline**.
+4. When finished, click **Download All Results (ZIP)**.
+
+```
+> Tip: Don’t mount your entire home directory; use a dedicated folder like `~/lx_results` or `C:\lx_results`.
+
+### 5) Stop the app
+- In the web UI click **Close**, or press **Ctrl+C** in the terminal, or:
+```bash
+docker rm -f lxp-v1
+```
+
+### Run in background (optional)
+```bash
+docker run -d --name lxp-v1   --restart unless-stopped   -p 7861:7860   -v $HOME/lx_results:/app/results   bioinformaticscdac/lineagexpress:v1.0.0
+```
 
 
+```
 
+---
 
+## ✅ Troubleshooting
 
+- **Browser doesn’t load:** confirm the port mapping shows in `docker ps` like `0.0.0.0:7861->7860/tcp`. Change host port if busy: `-p 9000:7860` → visit `http://localhost:9000`.
+- **ZIP contains old files:** use a clean results folder (e.g., `~/lx_results`), not your whole home directory.
+- **Slow performance:** increase the **Threads** slider if you have more CPU cores; using BAM/VCF input skips alignment.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+---
 
 
