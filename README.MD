@@ -44,7 +44,7 @@ python scripts/sequential_version_lineageXpress.py --fastq sample_list.txt --out
 
 **Parallel**
 ```bash
-python scripts/parallel_version_lineageXpress.py   --fastq sample_list.txt   --output_dir results   --n_jobs 2   --threads_per_tool 1
+python scripts/parallel_version_lineageXpress.py --fastq sample_list.txt  --output_dir results   --n_jobs 2   --threads_per_tool 1
 ```
 
 > Replace `--fastq` with `--bam` or `--vcf` to accept BAM/VCF inputs.
@@ -55,7 +55,7 @@ python scripts/parallel_version_lineageXpress.py   --fastq sample_list.txt   --o
 
 ```bash
 conda activate lineagexpress_serial
-python scripts/sequential_version_lineageXpress.py   --fastq sample_list.txt   --output_dir results
+python scripts/sequential_version_lineageXpress.py --fastq sample_list.txt --output_dir results
 ```
 
 ---
@@ -82,15 +82,12 @@ mkdir C:\lx_results
 ### 3) Start the web app
 **Linux / WSL**
 ```bash
-docker run --rm -it --name lxp-v1   -p 7861:7860   -v $HOME/lx_results:/app/results   bioinformaticscdac/lineagexpress:v1.0.0
+docker run --rm -it --name lxp-v1 -p 7861:7860 -v $HOME/lx_results:/app/results bioinformaticscdac/lineagexpress:v1.0.0
 ```
 
 **Windows (PowerShell with Docker Desktop)**
 ```powershell
-docker run --rm -it --name lxp-v1 `
-  -p 7861:7860 `
-  -v C:\lx_results:/app/results `
-  bioinformaticscdac/lineagexpress:v1.0.0
+docker run --rm -it --name lxp-v1 -p 7861:7860  -v C:\lx_results:/app/results bioinformaticscdac/lineagexpress:v1.0.0
 ```
 
 Open your browser at **http://localhost:7861**.
@@ -130,5 +127,6 @@ docker run -d --name lxp-v1   --restart unless-stopped   -p 7861:7860   -v $HOME
 - **Slow performance:** increase the **Threads** slider if you have more CPU cores; using BAM/VCF input skips alignment.
 
 ---
+
 
 
